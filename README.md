@@ -1,16 +1,13 @@
 # Basic CRUD App
 
-Basic CRUD App is a web application that allows the user to do the create, read, update and delete functions. It performs creating, read, update and delete data. It has modern design and basic functionality.
+Basic CRUD App is a web application that allows the user to do create, read, update and delete functions. It performs creating, read, update and delete data. It has modern design and basic functionality.
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See the instructions below for notes on how to deploy the project on a live system.
 
-## Screenshots
-![App screenshot](https://i.imgur.com/9ckwRL8.png)
-![App screenshot](https://i.imgur.com/t5V4bwG.png)
-![App screenshot](https://i.imgur.com/PfeIJ0e.png)
-![App screenshot](https://i.imgur.com/UY61c1Z.png)
+## Preview
+![App gif](gif/crud.gif)
 
 ### Prerequisites
 
