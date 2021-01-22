@@ -1,6 +1,6 @@
-# Basic CRUD App
+# RESTful API.
 
-Basic CRUD App is a web application that allows the user to do create, read, update and delete functions. It performs creating, read, update and delete data. It has modern design and basic functionality.
+RESTful API that handles basic CRUD functions.
 
 ## Getting Started
 
@@ -29,7 +29,11 @@ After that, go to your local host phpMyAdmin
 create a database with a name of 'crud'
 ```
 ![App screenshot](https://i.imgur.com/Am7Aqj2.png)
+
 Last is go back to cmd and type:
+```
+php artisan db:seed
+```
 ```
 php artisan migrate
 ```
