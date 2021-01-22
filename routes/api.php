@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // My API routes
-Route::post('/create', 'CRUDController@create');
-Route::post('/read', 'CRUDController@read');
-Route::post('/update', 'CRUDController@update');
-Route::post('/delete', 'CRUDController@delete');
+// Create
+Route::post('crud/create', 'CRUDController@create');
+// Get
+Route::get('crud', 'CRUDController@index');
+// Update
+Route::put('crud/update/{id}', 'CRUDController@update');
+// Delete
+Route::delete('crud/delete/{id}', 'CRUDController@delete');

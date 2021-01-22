@@ -1,46 +1,27 @@
 <?php
 namespace App\Http\Controllers;
-use DB;
+use App\crud;
 use Illuminate\Http\Request;
 
 class CRUDController extends Controller {
     // Create
-    public function create(Request $req) {
-        DB::table('crud')->insert([
-            'name' => $req['name'],
-            'gender' => $req['gender'],
-            'age' => $req['age'],
-            'address' => $req['address'],
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
+    public function create(Request $request) {
+        $data = crud::create($request->all());
+        return response()->json($data, 201);
     }
 
-    // Read
-    public function read(Request $req) {
-        $data = DB::table('crud')->select(
-            'id',
-            'name',
-            'gender',
-            'age',
-            'address'
-        )->get();
-        return $data;
+    // Get
+    public function index() {
+        return crud::all();
     }
 
     // Update
-    public function update(Request $req) {
-        DB::table('crud')->where('id', $req['id'])->update([
-            'name' => $req['name'],
-            'gender' => $req['gender'],
-            'age' => $req['age'],
-            'address' => $req['address'],
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
+    public function update(Request $request) {
+        crud::where('id', $request->id)->update($request->all());
     }
 
     // Delete
-    public function delete(Request $req) {
-        DB::table('crud')->where('id', $req['id'])->delete();
+    public function delete(Request $request) {
+        crud::where('id', $request->id)->delete();
     }
 }

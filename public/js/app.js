@@ -2197,7 +2197,7 @@ __webpack_require__.r(__webpack_exports__);
       CardTitle: 'Basic CRUD',
       CreateDialog: false,
       EditDialog: false,
-      datas: [],
+      crudData: [],
       create: {},
       edit: {},
       "delete": {},
@@ -2225,11 +2225,11 @@ __webpack_require__.r(__webpack_exports__);
       } else if (address == '' || address == null) {
         this.$toast.error('Address is required!', 'Error', this.notificationSystem.options.error);
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/create', {
-          name: this.create.name,
-          gender: this.create.gender,
-          age: this.create.age,
-          address: this.create.address
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/crud/create', {
+          name: name,
+          gender: gender,
+          age: age,
+          address: address
         }).then(function (res) {
           _this.CreateDialog = false;
 
@@ -2247,8 +2247,8 @@ __webpack_require__.r(__webpack_exports__);
     readData: function readData() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/read').then(function (res) {
-        _this2.datas = res.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/crud').then(function (res) {
+        _this2.crudData = res.data;
       });
     },
     passObject: function passObject(val) {
@@ -2258,6 +2258,7 @@ __webpack_require__.r(__webpack_exports__);
     updateData: function updateData() {
       var _this3 = this;
 
+      var id = this.edit.id;
       var name = this.edit.name;
       var gender = this.edit.gender;
       var age = this.edit.age;
@@ -2272,12 +2273,12 @@ __webpack_require__.r(__webpack_exports__);
       } else if (address == '' || address == null) {
         this.$toast.error('Address is required!', 'Error', this.notificationSystem.options.error);
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/update', {
-          id: this.edit.id,
-          name: this.edit.name,
-          gender: this.edit.gender,
-          age: this.edit.age,
-          address: this.edit.address
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('api/crud/update/' + id, {
+          id: id,
+          name: name,
+          gender: gender,
+          age: age,
+          address: address
         }).then(function (res) {
           _this3.EditDialog = false;
 
@@ -2294,8 +2295,9 @@ __webpack_require__.r(__webpack_exports__);
     deleteData: function deleteData() {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/delete', {
-        id: this["delete"].id
+      var id = this["delete"].id;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('api/crud/delete/' + id, {
+        id: id
       }).then(function (res) {
         _this4.$toast.success('Data has been deleted!', 'Success', _this4.notificationSystem.options.success);
 
@@ -2415,7 +2417,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeApp[data-v-a9aac016] {\r\n    background-color: whitesmoke;\n}\n.cardHeader[data-v-a9aac016] {\r\n    background: linear-gradient(45deg, #5189c1 25%, #41b883);\r\n    color: white;\r\n    font-weight: bold;\n}\r\n", ""]);
+exports.push([module.i, "\n.homeApp[data-v-a9aac016] {\r\n    background-color: whitesmoke;\n}\r\n", ""]);
 
 // exports
 
@@ -20891,7 +20893,7 @@ var render = function() {
             [
               _c(
                 "v-card-title",
-                [_c("card-header", { attrs: { title: "Basic CRUD app" } })],
+                [_c("card-header", { attrs: { title: "CRUD" } })],
                 1
               ),
               _vm._v(" "),
@@ -20945,17 +20947,17 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "tbody",
-                              _vm._l(_vm.datas, function(data) {
-                                return _c("tr", { key: data.id }, [
-                                  _c("td", [_vm._v(_vm._s(data.id))]),
+                              _vm._l(_vm.crudData, function(item) {
+                                return _c("tr", { key: item.id }, [
+                                  _c("td", [_vm._v(_vm._s(item.id))]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(data.name))]),
+                                  _c("td", [_vm._v(_vm._s(item.name))]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(data.gender))]),
+                                  _c("td", [_vm._v(_vm._s(item.gender))]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(data.age))]),
+                                  _c("td", [_vm._v(_vm._s(item.age))]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(data.address))]),
+                                  _c("td", [_vm._v(_vm._s(item.address))]),
                                   _vm._v(" "),
                                   _c(
                                     "td",
@@ -20967,7 +20969,7 @@ var render = function() {
                                           attrs: { color: "success" },
                                           on: {
                                             click: function($event) {
-                                              return _vm.passObject(data)
+                                              return _vm.passObject(item)
                                             }
                                           }
                                         },
@@ -20980,7 +20982,7 @@ var render = function() {
                                           attrs: { color: "error" },
                                           on: {
                                             click: function($event) {
-                                              return _vm.confirmation(data)
+                                              return _vm.confirmation(item)
                                             }
                                           }
                                         },
@@ -21050,6 +21052,7 @@ var render = function() {
                                 attrs: {
                                   dense: "",
                                   outlined: "",
+                                  autofocus: "",
                                   label: "Name"
                                 },
                                 model: {
@@ -21243,6 +21246,7 @@ var render = function() {
                                 attrs: {
                                   dense: "",
                                   outlined: "",
+                                  autofocus: "",
                                   label: "Name"
                                 },
                                 model: {

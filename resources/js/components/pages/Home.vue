@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
         <v-card elevation="12" width="1000" height="770">
             <v-card-title>
-                <card-header title="Basic CRUD app"></card-header>
+                <card-header title="CRUD"></card-header>
             </v-card-title>
             <v-card-subtitle class="mt-12">
                 <div class="text-end mr-5">
@@ -24,15 +24,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="data in datas" :key="data.id">
-                                <td>{{data.id}}</td>
-                                <td>{{data.name}}</td>
-                                <td>{{data.gender}}</td>
-                                <td>{{data.age}}</td>
-                                <td>{{data.address}}</td>
+                            <tr v-for="item in crudData" :key="item.id">
+                                <td>{{item.id}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.gender}}</td>
+                                <td>{{item.age}}</td>
+                                <td>{{item.address}}</td>
                                 <td>
-                                    <v-icon color="success" class="mr-5" @click="passObject(data)">mdi-pencil</v-icon>
-                                    <v-icon color="error" @click="confirmation(data)">mdi-delete</v-icon>
+                                    <v-icon color="success" class="mr-5" @click="passObject(item)">mdi-pencil</v-icon>
+                                    <v-icon color="error" @click="confirmation(item)">mdi-delete</v-icon>
                                 </td>
                             </tr>
                         </tbody>
@@ -49,7 +49,7 @@
                 <v-card-text class="mt-5">
                     <v-form class="mx-5">
                         <v-row>
-                            <v-text-field dense outlined v-model="create.name" label="Name"></v-text-field>
+                            <v-text-field dense outlined autofocus v-model="create.name" label="Name"></v-text-field>
                         </v-row>
                         <v-row class="my-n5 ml-n6">
                             <v-col cols="5">
@@ -85,7 +85,7 @@
                 <v-card-text class="mt-5">
                     <v-form class="mx-5">
                         <v-row>
-                            <v-text-field dense outlined v-model="edit.name" label="Name"></v-text-field>
+                            <v-text-field dense outlined autofocus v-model="edit.name" label="Name"></v-text-field>
                         </v-row>
                         <v-row class="my-n5 ml-n6">
                             <v-col cols="5">
@@ -156,7 +156,7 @@ export default {
             CardTitle: 'Basic CRUD',
             CreateDialog: false,
             EditDialog: false,
-            datas: [],
+            crudData: [],
             create: {},
             edit: {},
             delete: {},
@@ -184,11 +184,11 @@ export default {
             } else if (address == '' || address == null) {
                 this.$toast.error('Address is required!', 'Error', this.notificationSystem.options.error)
             } else {
-                axios.post('api/create', {
-                    name: this.create.name,
-                    gender: this.create.gender,
-                    age: this.create.age,
-                    address: this.create.address
+                axios.post('api/crud/create', {
+                    name,
+                    gender,
+                    age,
+                    address
                 }).then(res => {
                     this.CreateDialog = false
                     this.$toast.success('New data has been added!', 'Success', this.notificationSystem.options.success)
@@ -201,8 +201,8 @@ export default {
             this.create = []
         },
         readData() {
-            axios.post('api/read').then(res => {
-                this.datas = res.data
+            axios.get('api/crud').then(res => {
+                this.crudData = res.data
             })
         },
         passObject(val) {
@@ -210,6 +210,7 @@ export default {
             this.edit = Object.assign({}, val)
         },
         updateData() {
+            let id = this.edit.id
             let name = this.edit.name
             let gender = this.edit.gender
             let age = this.edit.age
@@ -223,12 +224,12 @@ export default {
             } else if (address == '' || address == null) {
                 this.$toast.error('Address is required!', 'Error', this.notificationSystem.options.error)
             } else {
-                axios.post('api/update', {
-                    id: this.edit.id,
-                    name: this.edit.name,
-                    gender: this.edit.gender,
-                    age: this.edit.age,
-                    address: this.edit.address
+                axios.put('api/crud/update/' + id, {
+                    id,
+                    name,
+                    gender,
+                    age,
+                    address
                 }).then(res => {
                     this.EditDialog = false
                     this.$toast.success('Data has been updated!', 'Success', this.notificationSystem.options.success)
@@ -242,8 +243,9 @@ export default {
                 this.notificationSystem.options.question)
         },
         deleteData() {
-            axios.post('api/delete', {
-                id: this.delete.id
+            let id = this.delete.id
+            axios.delete('api/crud/delete/' + id, {
+                id
             }).then(res => {
                 this.$toast.success('Data has been deleted!', 'Success', this.notificationSystem.options.success)
                     this.readData()
@@ -256,11 +258,5 @@ export default {
 <style scoped>
 .homeApp {
     background-color: whitesmoke;
-}
-
-.cardHeader {
-    background: linear-gradient(45deg, #5189c1 25%, #41b883);
-    color: white;
-    font-weight: bold;
 }
 </style>
