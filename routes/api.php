@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 // My API routes
 // Create
-Route::post('crud/create', 'CRUDController@create');
+Route::post('crud', 'CRUDController@create');
 // Get
 Route::get('crud', 'CRUDController@index');
 // Update
-Route::put('crud/update/{id}', 'CRUDController@update');
+Route::put('crud/{id}', 'CRUDController@update');
 // Delete
-Route::delete('crud/delete/{id}', 'CRUDController@delete');
+Route::delete('crud/{id}', 'CRUDController@delete');

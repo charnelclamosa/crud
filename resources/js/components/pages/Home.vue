@@ -184,7 +184,7 @@ export default {
             } else if (address == '' || address == null) {
                 this.$toast.error('Address is required!', 'Error', this.notificationSystem.options.error)
             } else {
-                axios.post('api/crud/create', {
+                axios.post('api/crud', {
                     name,
                     gender,
                     age,
@@ -224,7 +224,7 @@ export default {
             } else if (address == '' || address == null) {
                 this.$toast.error('Address is required!', 'Error', this.notificationSystem.options.error)
             } else {
-                axios.put('api/crud/update/' + id, {
+                axios.put('api/crud/' + id, {
                     id,
                     name,
                     gender,
@@ -244,7 +244,7 @@ export default {
         },
         deleteData() {
             let id = this.delete.id
-            axios.delete('api/crud/delete/' + id, {
+            axios.delete('api/crud/' + id, {
                 id
             }).then(res => {
                 this.$toast.success('Data has been deleted!', 'Success', this.notificationSystem.options.success)
