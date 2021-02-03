@@ -24,13 +24,6 @@ cd../Project
 ```
 yarn install
 ```
-After that, go to your local host phpMyAdmin
-```
-create a database with a name of 'crud'
-```
-![App screenshot](https://i.imgur.com/Am7Aqj2.png)
-
-Last is go back to cmd and type:
 ```
 php artisan db:seed
 ```
